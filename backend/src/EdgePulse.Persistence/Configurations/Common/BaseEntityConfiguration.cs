@@ -17,5 +17,8 @@ public abstract class BaseEntityConfiguration<TEntity>
 
         builder.Property(x => x.IsDeleted)
                .HasDefaultValue(false);
+
+        builder.Property(x => x.UpdatedOnUtc)
+               .IsRequired(false);
     }
 }

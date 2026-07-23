@@ -36,7 +36,6 @@ namespace EdgePulse.Infrastructure.Authentication
             var authUser = new AuthUser
             {
                 UserId = user.Id,
-                CustomerId = user.CustomerId,
                 RoleId = user.RoleId,
                 Email = user.Email,
                 FullName = $"{user.FirstName} {user.LastName}",
@@ -53,7 +52,6 @@ namespace EdgePulse.Infrastructure.Authentication
                 User = new UserInfo
                 {
                     UserId = user.Id,
-                    CustomerId = user.CustomerId,
                     FullName = $"{user.FirstName} {user.LastName}",
                     Email = user.Email,
                     Role = user.Role.Name

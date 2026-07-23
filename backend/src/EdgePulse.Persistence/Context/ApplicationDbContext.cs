@@ -17,6 +17,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<Device> Devices => Set<Device>();
     public DbSet<Gateway> Gateways => Set<Gateway>();
+    public DbSet<UserCustomer> UserCustomers => Set<UserCustomer>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -15,12 +15,9 @@ namespace EdgePulse.Domain.Entities
 
         public string PasswordHash { get; set; } = string.Empty;
 
-        public Guid CustomerId { get; set; }
-
-        public Customer Customer { get; set; } = default!;
-
         public Guid RoleId { get; set; }
 
         public Role Role { get; set; } = default!;
+        public ICollection<UserCustomer> UserCustomers { get; set; } = new List<UserCustomer>();
     }
 }

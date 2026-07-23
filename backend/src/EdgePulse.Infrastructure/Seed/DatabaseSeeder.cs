@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using EdgePulse.Application.Common.Authorization;
+﻿using EdgePulse.Application.Common.Authorization;
 using EdgePulse.Application.Interfaces;
+using EdgePulse.Domain.Constants;
 using EdgePulse.Domain.Entities;
 using EdgePulse.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace EdgePulse.Infrastructure.Seed
 {
@@ -25,6 +26,7 @@ namespace EdgePulse.Infrastructure.Seed
                 await SeedPermissionsAsync();
                 await SeedRolePermissionsAsync();
                 await SeedCustomerAsync();
+
                 await SeedSuperAdminAsync();
 
                 await transaction.CommitAsync();
@@ -38,26 +40,35 @@ namespace EdgePulse.Infrastructure.Seed
 
         private async Task SeedRolesAsync()
         {
-            if (await _context.Roles.AnyAsync())
-                return;
+            var roles = new[]
+            {
+                new Role
+                {
+                    Id = Guid.NewGuid(),
+                    Name = Roles.SuperAdmin,
+                    Description = "System Administrator"
+                },
+                new Role
+                {
+                    Id = Guid.NewGuid(),
+                    Name = Roles.PlatformAdmin,
+                    Description = "Platform Administrator"
+                },
+                new Role
+                {
+                    Id = Guid.NewGuid(),
+                    Name = Roles.CustomerAdmin,
+                    Description = "Customer Administrator"
+                }
+            };
 
-            var roles = new List<Role>
-        {
-            new()
+            foreach (var role in roles)
             {
-                Id = Guid.NewGuid(),
-                Name = "SuperAdmin",
-                Description = "System Administrator"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "CustomerAdmin",
-                Description = "Customer Administrator"
+                if (!await _context.Roles.AnyAsync(r => r.Name == role.Name))
+                {
+                    await _context.Roles.AddAsync(role);
+                }
             }
-        };
-
-            await _context.Roles.AddRangeAsync(roles);
 
             await _context.SaveChangesAsync();
         }
@@ -126,7 +137,6 @@ namespace EdgePulse.Infrastructure.Seed
             var user = new User
             {
                 Id = Guid.NewGuid(),
-                CustomerId = customer.Id,
                 RoleId = role.Id,
                 FirstName = "System",
                 LastName = "Administrator",
