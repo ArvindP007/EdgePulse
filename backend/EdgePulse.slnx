@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EdgePulse.Api/EdgePulse.Api.csproj" />
+    <Project Path="src/EdgePulse.Application/EdgePulse.Application.csproj" />
+    <Project Path="src/EdgePulse.Domain/EdgePulse.Domain.csproj" />
+    <Project Path="src/EdgePulse.Infrastructure/EdgePulse.Infrastructure.csproj" />
+    <Project Path="src/EdgePulse.Persistence/EdgePulse.Persistence.csproj" />
+  </Folder>
+</Solution>
