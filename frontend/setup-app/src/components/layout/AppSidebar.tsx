@@ -25,7 +25,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import EdgePulseLogo from "@/assets/device-logo.svg";
 
 const items = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
@@ -37,42 +38,47 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const location = useLocation();
+
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>EdgePulse</SidebarGroupLabel>
+          <div className="mb-2 flex items-center gap-2 px-2">
+            <img src={EdgePulseLogo} alt="EdgePulse" className="h-6 w-6" />
+            <span className="text-sm font-semibold">EdgePulse</span>
+          </div>
 
           <SidebarMenu>
-            {items.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                    <NavLink to="/">
-                    <item.icon className="h-4 w-4" />
-                    <span>{item.title}</span>
+            {items.map((item) => {
+              const isActive = location.pathname === item.url;
+
+              return (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild isActive={isActive}>
+                    <NavLink to={item.url}>
+                      <item.icon className="h-4 w-4" />
+                      <span>{item.title}</span>
                     </NavLink>
-                </SidebarMenuButton>
-            </SidebarMenuItem>
-            ))}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
             <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <button className="flex w-full items-center gap-3 rounded-lg p-2 hover:bg-accent">
+                <DropdownMenuTrigger asChild>
+                <button className="flex w-full items-center gap-3 rounded-lg p-2 hover:bg-sidebar-accent group-data-[state=collapsed]:justify-center">
                 <Avatar className="h-9 w-9">
                     <AvatarFallback>AP</AvatarFallback>
                 </Avatar>
 
-                <div className="flex flex-col items-start">
-                    <span className="text-sm font-medium">
-                    Arvind Patkal
-                    </span>
+                <div className="flex flex-col items-start group-data-[state=collapsed]:hidden">
+                  <span className="text-sm font-medium">Arvind Patkal</span>
 
-                    <span className="text-xs text-muted-foreground">
-                    Super Admin
-                    </span>
+                  <span className="text-xs text-muted-foreground">Super Admin</span>
                 </div>
                 </button>
             </DropdownMenuTrigger>

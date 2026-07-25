@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { type AxiosRequestConfig } from "axios";
 import { storage } from "./storage";
 
 const api = axios.create({
@@ -8,10 +8,12 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use((config: AxiosRequestConfig | any) => {
   const token = storage.getToken();
 
   if (token) {
+    // Ensure headers object exists and set Authorization
+    config.headers = config.headers ?? {};
     config.headers.Authorization = `Bearer ${token}`;
   }
 
