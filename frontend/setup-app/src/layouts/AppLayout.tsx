@@ -9,10 +9,10 @@ export default function AppLayout() {
     <SidebarProvider>
       <AppSidebar />
 
-      <SidebarInset>
+      <SidebarInset className="min-h-screen bg-surface">
         <AppHeader />
 
-        <main className="flex-1">
+        <main className="flex-1 px-6 py-6">
           <Outlet />
         </main>
       </SidebarInset>

@@ -33,30 +33,45 @@ const cards = [
 export default function DashboardPage() {
   return (
     <div className="space-y-6 p-6">
-      <div>
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Welcome to EdgePulse Setup Portal.
-        </p>
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <p className="text-muted-foreground">
+            Welcome to EdgePulse Setup Portal.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          <button className="rounded-full border border-border bg-background px-3 py-2 text-sm text-foreground hover:bg-muted">
+            Status
+          </button>
+          <button className="rounded-full border border-border bg-background px-3 py-2 text-sm text-foreground hover:bg-muted">
+            Category
+          </button>
+          <button className="rounded-full border border-border bg-background px-3 py-2 text-sm text-foreground hover:bg-muted">
+            Price: $100-$200
+          </button>
+          <button className="rounded-full border border-border bg-background px-3 py-2 text-sm text-foreground hover:bg-muted">
+            Columns
+          </button>
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {cards.map((card) => (
           <Card key={card.title}>
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-sm">
-                {card.title}
-              </CardTitle>
-
+              <div>
+                <CardTitle className="text-sm">{card.title}</CardTitle>
+                <p className="text-xs text-muted-foreground">Updated 2m ago</p>
+              </div>
               <card.icon className="h-5 w-5 text-muted-foreground" />
             </CardHeader>
 
             <CardContent>
-              <div className="text-3xl font-bold">
-                {card.value}
-              </div>
+              <div className="text-3xl font-bold">{card.value}</div>
             </CardContent>
-          </Card> 
+          </Card>
         ))}
         <Card>
   <CardHeader>

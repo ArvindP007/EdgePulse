@@ -4,6 +4,7 @@ import LoginPage from "@/features/auth/pages/LoginPage";
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import ProtectedRoute from "./ProtectedRoute";
 import AppLayout from "../layouts/AppLayout";
+import CustomerPage from "@/features/customers/pages/CustomerPage";
 
 export default function AppRoutes() {
   return (
@@ -19,9 +20,9 @@ export default function AppRoutes() {
     >
         <Route index element={<DashboardPage />} />
 
-        {/* <Route path="customers" element={<CustomerPage />} />
+        <Route path="customers" element={<CustomerPage />} />
 
-        <Route path="users" element={<UsersPage />} /> */}
+        {/* <Route path="users" element={<UsersPage />} /> */}
     </Route>
     </Routes>
   );

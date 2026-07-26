@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import { Search, Bell } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
@@ -11,7 +13,22 @@ import {
 } from "@/components/ui/breadcrumb";
 import EdgePulseLogo from "@/assets/device-logo.svg";
 
+const breadcrumbLabels: Record<string, string> = {
+  "/": "Dashboard",
+  "/customers": "Customers",
+  "/roles": "Roles",
+  "/devices": "Devices",
+  "/gateways": "Gateways",
+  "/settings": "Settings",
+};
+
 export function AppHeader() {
+  const location = useLocation();
+  const pageTitle = useMemo(
+    () => breadcrumbLabels[location.pathname] ?? "Dashboard",
+    [location.pathname]
+  );
+
   return (
     <header className="flex h-16 items-center justify-between border-b px-6">
       <div className="flex items-center gap-4">
@@ -22,7 +39,7 @@ export function AppHeader() {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbPage>Dashboard</BreadcrumbPage>
+              <BreadcrumbPage>{pageTitle}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

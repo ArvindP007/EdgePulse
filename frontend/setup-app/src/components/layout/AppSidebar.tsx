@@ -10,6 +10,7 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarHeader,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
@@ -43,11 +44,18 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
-        <SidebarGroup>
-          <div className="mb-2 flex items-center gap-2 px-2">
+        <SidebarHeader className="px-4 py-3">
+          <div className="flex items-center gap-2">
             <img src={EdgePulseLogo} alt="EdgePulse" className="h-6 w-6" />
-            <span className="text-sm font-semibold">EdgePulse</span>
+            <div>
+              <p className="text-sm font-semibold">EdgePulse</p>
+              <p className="text-xs text-muted-foreground">Setup Portal</p>
+            </div>
           </div>
+        </SidebarHeader>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
 
           <SidebarMenu>
             {items.map((item) => {
@@ -68,28 +76,34 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                <button className="flex w-full items-center gap-3 rounded-lg p-2 hover:bg-sidebar-accent group-data-[state=collapsed]:justify-center">
-                <Avatar className="h-9 w-9">
-                    <AvatarFallback>AP</AvatarFallback>
-                </Avatar>
+        {/* <div className="rounded-2xl border border-border bg-surface p-3 text-sm text-muted-foreground data-[state=collapsed]:hidden">
+          <p className="font-medium">Need help?</p>
+          <p className="mt-1 text-xs">Ask your team for access or check docs.</p>
+          <button className="mt-3 inline-flex items-center justify-center rounded-full bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90">
+            Learn more
+          </button>
+        </div> */}
 
-                <div className="flex flex-col items-start group-data-[state=collapsed]:hidden">
-                  <span className="text-sm font-medium">Arvind Patkal</span>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex w-full items-center gap-3 rounded-lg p-2 hover:bg-sidebar-accent group-data-[state=collapsed]:justify-center">
+              <Avatar className="h-9 w-9">
+                <AvatarFallback>AP</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col items-start group-data-[state=collapsed]:hidden">
+                <span className="text-sm font-medium">Arvind Patkal</span>
+                <span className="text-xs text-muted-foreground">Super Admin</span>
+              </div>
+            </button>
+          </DropdownMenuTrigger>
 
-                  <span className="text-xs text-muted-foreground">Super Admin</span>
-                </div>
-                </button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent align="end" side="top">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-            </DropdownMenu>
-        </SidebarFooter>
+          <DropdownMenuContent align="end" side="top">
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>Logout</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }
