@@ -20,11 +20,13 @@ namespace EdgePulse.Infrastructure.Authentication
         }
         public async Task<LoginResponse> LoginAsync(LoginRequest request)
         {
+            var normalizedEmail = request.Email.Trim().ToLowerInvariant();
+
             var user = await _context.Users.AsNoTracking()
                         .Include(x => x.Role)
                             .ThenInclude(x => x.RolePermissions)
                                 .ThenInclude(x => x.Permission)
-                        .FirstOrDefaultAsync(x => x.Email == request.Email.ToLower() && !x.IsDeleted);
+                        .FirstOrDefaultAsync(x => x.Email == normalizedEmail && !x.IsDeleted);
 
             if (user == null || !_passwordHasher.Verify(request.Password, user.PasswordHash))
             {

@@ -13,10 +13,10 @@ interface ExportDropdownProps<TData> {
   table: Table<TData>;
 }
 
-function toCsv(rows: any[], columns: string[]) {
+function toCsv(rows: Array<Record<string, unknown>>, columns: string[]) {
   const header = columns.join(",");
-  const lines = rows.map(r =>
-    columns.map(c => JSON.stringify(r[c] ?? "")).join(",")
+  const lines = rows.map((row) =>
+    columns.map((column) => JSON.stringify(row[column] ?? "")).join(",")
   );
   return [header, ...lines].join("\n");
 }
@@ -28,9 +28,9 @@ export default function ExportDropdown<TData>({ table }: ExportDropdownProps<TDa
       .filter(col => col.getIsVisible())
       .map(col => col.id);
 
-    const rows = table.getRowModel().rows.map(row => {
-      const obj: Record<string, any> = {};
-      row.getVisibleCells().forEach(cell => {
+    const rows = table.getRowModel().rows.map((row) => {
+      const obj: Record<string, unknown> = {};
+      row.getVisibleCells().forEach((cell) => {
         obj[cell.column.id] = cell.getValue();
       });
       return obj;

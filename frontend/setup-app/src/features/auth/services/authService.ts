@@ -1,3 +1,5 @@
+import { isAxiosError } from "axios";
+
 import api from "@/services/api";
 import type { LoginRequest, LoginResponse } from "../types";
 
@@ -8,11 +10,13 @@ export const login = async (
     const { data } = await api.post<LoginResponse>("/auth/login", request);
 
     return data;
-  } catch (err: any) {
-    // Normalize error message coming from backend if available
-    const message =
-      err?.response?.data?.message || err?.message || "Login failed";
+  } catch (error: unknown) {
+    if (isAxiosError(error)) {
+      const message = error.response?.data?.message ?? error.message ?? "Login failed";
 
-    throw new Error(message);
+      throw new Error(message, { cause: error });
+    }
+
+    throw new Error("Login failed", { cause: error });
   }
 };

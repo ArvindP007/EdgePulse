@@ -34,7 +34,6 @@ export default function CustomerDialog({
         register,
         handleSubmit,
         reset,
-        formState: { isSubmitting },
     } = useForm<CreateCustomerRequest>();
 
     useEffect(() =>{

@@ -23,26 +23,17 @@ public class CustomerService : ICustomerService
         {
             Id = Guid.NewGuid(),
             Name = request.Name.Trim(),
-            Code = request.Code.Trim().ToUpper(),
-            Email = request.Email.Trim(),
-            ContactPerson = request.ContactPerson.Trim(),
-            PhoneNumber = request.PhoneNumber.Trim(),
-            Address = request.Address.Trim()
+            Code = request.Code.Trim().ToUpperInvariant(),
+            Email = request.Email?.Trim() ?? string.Empty,
+            ContactPerson = request.ContactPerson?.Trim(),
+            PhoneNumber = request.PhoneNumber?.Trim(),
+            Address = request.Address?.Trim()
         };
 
         _context.Customers.Add(customer);
         await _context.SaveChangesAsync();
 
-        return new CustomerDto
-        {
-            Id = customer.Id,
-            Name = customer.Name,
-            Code = customer.Code,
-            Email = customer.Email,
-            ContactPerson = customer.ContactPerson,
-            PhoneNumber = customer.PhoneNumber,
-            Address = customer.Address
-        };
+        return MapToDto(customer);
     }
 
     public async Task DeleteAsync(Guid id)
@@ -51,7 +42,7 @@ public class CustomerService : ICustomerService
             .FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted);
 
         if (customer == null)
-            throw new Exception("Customer not found.");
+            throw new KeyNotFoundException("Customer not found.");
 
         customer.IsDeleted = true;
 
@@ -80,16 +71,7 @@ public class CustomerService : ICustomerService
             .OrderBy(c => c.Name)
             .Skip((request.PageNumber - 1) * request.PageSize)
             .Take(request.PageSize)
-            .Select(c => new CustomerDto
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Code = c.Code,
-                Email = c.Email,
-                ContactPerson = c.ContactPerson,
-                PhoneNumber = c.PhoneNumber,
-                Address = c.Address
-            })
+            .Select(c => MapToDto(c))
             .ToListAsync();
 
         return new PagedResult<CustomerDto>
@@ -106,16 +88,7 @@ public class CustomerService : ICustomerService
         return await _context.Customers
             .AsNoTracking()
             .Where(c => c.Id == id && !c.IsDeleted)
-            .Select(c => new CustomerDto
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Code = c.Code,
-                Email = c.Email,
-                ContactPerson = c.ContactPerson,
-                PhoneNumber = c.PhoneNumber,
-                Address = c.Address
-            })
+            .Select(c => MapToDto(c))
             .FirstOrDefaultAsync();
     }
 
@@ -125,15 +98,29 @@ public class CustomerService : ICustomerService
             .FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted);
 
         if (customer == null)
-            throw new Exception("Customer not found.");
+            throw new KeyNotFoundException("Customer not found.");
 
         customer.Name = request.Name.Trim();
-        customer.Code = request.Code.Trim().ToUpper();
-        customer.Email = request.Email.Trim();
-        customer.ContactPerson = request.ContactPerson.Trim();
-        customer.PhoneNumber = request.PhoneNumber.Trim();
-        customer.Address = request.Address.Trim();
+        customer.Code = request.Code.Trim().ToUpperInvariant();
+        customer.Email = request.Email?.Trim() ?? string.Empty;
+        customer.ContactPerson = request.ContactPerson?.Trim();
+        customer.PhoneNumber = request.PhoneNumber?.Trim();
+        customer.Address = request.Address?.Trim();
 
         await _context.SaveChangesAsync();
+    }
+
+    private static CustomerDto MapToDto(Customer customer)
+    {
+        return new CustomerDto
+        {
+            Id = customer.Id,
+            Name = customer.Name,
+            Code = customer.Code,
+            Email = customer.Email,
+            ContactPerson = customer.ContactPerson,
+            PhoneNumber = customer.PhoneNumber,
+            Address = customer.Address
+        };
     }
 }

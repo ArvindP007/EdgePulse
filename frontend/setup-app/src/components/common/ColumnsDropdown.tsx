@@ -41,8 +41,7 @@ export default function ColumnsDropdown<TData>({
             const label =
               typeof rawHeader === "string"
                 ? rawHeader
-                : // prefer accessorKey or id when header is a render function or JSX
-                  (column.columnDef as any).accessorKey ?? column.id;
+                : column.id;
 
             return (
               <DropdownMenuCheckboxItem

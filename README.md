@@ -10,6 +10,18 @@ EdgePulse — a production-ready, extensible platform for managing and monitorin
 
 Short description: EdgePulse helps teams onboard devices, manage gateways, visualize telemetry, and enforce role-based access control at scale.
 
+### What this repository currently contains
+
+The repository already includes a working backend and frontend foundation:
+
+- A layered ASP.NET Core backend with API, application, domain, infrastructure, and persistence projects.
+- A React + TypeScript + Vite admin portal for managing customers and core platform concepts.
+- JWT-based authentication, authorization, and seeded roles/permissions.
+- EF Core with PostgreSQL persistence and migration-based schema evolution.
+- A modern UI built with Tailwind CSS and shadcn/ui-style components.
+
+In its current state, EdgePulse is best understood as a practical enterprise admin platform foundation rather than a fully completed IoT product. The codebase is already structured for iterative expansion.
+
 ---
 
 ## ✨ Features
@@ -41,14 +53,16 @@ Short description: EdgePulse helps teams onboard devices, manage gateways, visua
 
 ## 🏛️ Project Architecture
 
-EdgePulse follows Clean Architecture to enforce separation of concerns between layers:
+EdgePulse follows a practical layered architecture that is already reflected in the repository:
 
-- Presentation: Web API controllers, OpenAPI/Swagger, front-end applications
-- Application: Use-cases, commands/queries, DTOs, application services
-- Domain: Entities, value objects, domain services, business rules
-- Infrastructure: EF Core persistence, external integrations, background workers
+- API layer: ASP.NET Core controllers, middleware, Swagger, authentication setup
+- Application layer: DTOs, service interfaces, shared models, authorization helpers
+- Domain layer: entities, enums, constants, and core business concepts
+- Infrastructure layer: concrete services, JWT/auth implementation, seeding, and business logic execution
+- Persistence layer: EF Core DbContext, entity configurations, migrations, and database access
+- Frontend layer: React + TypeScript pages, feature modules, shared UI components, hooks, and services
 
-This layout enables independent testing, easier reviews, and safer refactors.
+This structure keeps the backend modular and the frontend feature-oriented while staying simple enough for active development and incremental feature work.
 
 ---
 
@@ -255,6 +269,8 @@ Contributions are welcome. Suggested workflow:
 2. Keep commits focused and atomic; write descriptive commit messages
 3. Add tests for new behavior and ensure existing tests pass
 4. Open a pull request with a description of changes and relevant context
+
+For new work, follow the repository conventions already established in the backend and frontend guides under the docs folder.
 
 See CONTRIBUTING.md (if present) for contribution guidelines and the code of conduct.
 

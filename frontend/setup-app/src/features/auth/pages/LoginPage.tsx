@@ -33,8 +33,11 @@ export default function LoginPage() {
       toast.success("Logged in");
 
       navigate("/");
-    } catch (err: any) {
-      toast.error(err?.message || "Invalid email or password");
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Invalid email or password";
+
+      toast.error(message);
     }
   };
 

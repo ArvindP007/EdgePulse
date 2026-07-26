@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import type { Table } from "@tanstack/react-table";
 import DataToolbar from "@/components/common/DataToolbar";
 import { DataTable } from "@/components/common/DataTable";
 import ColumnsDropdown from "@/components/common/ColumnsDropdown";
@@ -22,21 +23,22 @@ export default function CustomerPage() {
     search
   );
 
-  const [tableInstance, setTableInstance] = useState<any | null>(null);
+  const [tableInstance, setTableInstance] = useState<Table<Customer> | null>(null);
 
-  const columns = customerColumns(
-
-    customer => {
-        setSelectedCustomer(customer);
-        setOpen(true);
-    },
-
-    customer => {
-        setSelectedCustomer(customer);
-        setDeleteOpen(true);
-    }
-
-);
+  const columns = useMemo(
+    () =>
+      customerColumns(
+        (customer) => {
+          setSelectedCustomer(customer);
+          setOpen(true);
+        },
+        (customer) => {
+          setSelectedCustomer(customer);
+          setDeleteOpen(true);
+        }
+      ),
+    []
+  );
 
   return (
     <div className="space-y-6">
