@@ -14,6 +14,11 @@ export async function getCustomers(
   return data;
 }
 
+export async function getCustomerOptions(): Promise<Customer[]>{
+  const { data } = await api.get<Customer[]>("/customer/options");
+  return data;
+}
+
 export async function createCustomer(request: CreateCustomerRequest) {
   const { data } = await api.post<Customer>("/customer", request);
 

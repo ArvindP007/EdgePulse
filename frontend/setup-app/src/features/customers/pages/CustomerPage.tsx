@@ -4,6 +4,7 @@ import DataToolbar from "@/components/common/DataToolbar";
 import { DataTable } from "@/components/common/DataTable";
 import ColumnsDropdown from "@/components/common/ColumnsDropdown";
 import ExportDropdown from "@/components/common/ExportDropdown";
+import PageLoader from "@/components/common/PageLoader";
 
 import CustomerDialog from "../components/CustomerDialog";
 import { customerColumns } from "../components/CustomerColumns";
@@ -24,6 +25,10 @@ export default function CustomerPage() {
   );
 
   const [tableInstance, setTableInstance] = useState<Table<Customer> | null>(null);
+
+  // if (isLoading && !data) {
+  //   return <PageLoader />;
+  // }
 
   const columns = useMemo(
     () =>

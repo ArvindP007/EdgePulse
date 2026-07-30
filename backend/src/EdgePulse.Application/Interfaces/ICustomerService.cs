@@ -10,6 +10,8 @@ public interface ICustomerService
 
     Task<CustomerDto?> GetByIdAsync(Guid id);
 
+    Task<IEnumerable<CustomerOptionDto>> GetAllCustomerOptions();
+
     Task<CustomerDto> CreateAsync(CreateCustomerRequest request);
 
     Task UpdateAsync(Guid id, UpdateCustomerRequest request);

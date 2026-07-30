@@ -10,7 +10,6 @@ import {
 import {
   Sidebar,
   SidebarContent,
-  SidebarHeader,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
@@ -18,6 +17,9 @@ import {
   SidebarMenuItem,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+
+import  CustomerSelector from "../common/CustomerSelector";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +29,6 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { NavLink, useLocation } from "react-router-dom";
-import EdgePulseLogo from "@/assets/device-logo.svg";
 
 const items = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
@@ -44,15 +45,8 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
-        <SidebarHeader className="px-4 py-3">
-          <div className="flex items-center gap-2">
-            <img src={EdgePulseLogo} alt="EdgePulse" className="h-6 w-6" />
-            <div>
-              <p className="text-sm font-semibold">EdgePulse</p>
-              <p className="text-xs text-muted-foreground">Setup Portal</p>
-            </div>
-          </div>
-        </SidebarHeader>
+        <CustomerSelector>
+        </CustomerSelector>
 
         <SidebarGroup>
           <SidebarGroupLabel>Main Menu</SidebarGroupLabel>

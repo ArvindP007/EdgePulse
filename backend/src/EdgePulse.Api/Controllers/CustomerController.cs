@@ -37,6 +37,14 @@ public class CustomerController : ControllerBase
         return Ok(customer);
     }
 
+    [HttpGet()]
+    [Route("options")]
+    public async Task<IActionResult> GetAllCustomerOptions()
+    {
+        var customers = await _customerService.GetAllCustomerOptions();
+        return Ok(customers);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create(CreateCustomerRequest request)
     {

@@ -12,6 +12,8 @@ public class CustomerService : ICustomerService
 {
     private readonly ApplicationDbContext _context;
 
+    public List<CustomerOptionDto> Items { get; private set; }
+
     public CustomerService(ApplicationDbContext context)
     {
         _context = context;
@@ -122,5 +124,23 @@ public class CustomerService : ICustomerService
             PhoneNumber = customer.PhoneNumber,
             Address = customer.Address
         };
+    }
+
+    public async Task<IEnumerable<CustomerOptionDto>> GetAllCustomerOptions()
+    {
+        var query = _context.Customers
+        .AsNoTracking()
+        .Where(c => !c.IsDeleted);
+
+        var items = await query
+            .OrderBy(c => c.Name)
+            .Select(c => new CustomerOptionDto
+            {
+                Id = c.Id,
+                Name = c.Name
+            })
+            .ToListAsync();
+
+        return items;
     }
 }

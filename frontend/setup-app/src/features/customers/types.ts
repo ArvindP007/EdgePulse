@@ -14,6 +14,10 @@ export interface GetCustomersRequest {
   search?: string;
 }
 
+export interface CustomerOption {
+    id: string;
+    name: string;
+}
 export interface CreateCustomerRequest {
   name: string;
   code: string;

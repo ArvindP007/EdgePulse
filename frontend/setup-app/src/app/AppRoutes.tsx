@@ -5,12 +5,18 @@ import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import ProtectedRoute from "./ProtectedRoute";
 import AppLayout from "../layouts/AppLayout";
 import CustomerPage from "@/features/customers/pages/CustomerPage";
+import ServerErrorPage from "@/pages/ServerErrorPage";
+import UnauthorizedPage from "@/pages/UnauthorizedPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
 
+      <Route path="/403" element={<UnauthorizedPage />} />
+      <Route path="/500" element={<ServerErrorPage />} />
+      
       <Route
         element={
             <ProtectedRoute>
@@ -24,6 +30,7 @@ export default function AppRoutes() {
 
         {/* <Route path="users" element={<UsersPage />} /> */}
     </Route>
+    <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

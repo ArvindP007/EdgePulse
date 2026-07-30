@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Activity,
   Cpu,
@@ -6,6 +7,7 @@ import {
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import PageLoader from "@/components/common/PageLoader";
 
 const cards = [
   {
@@ -31,6 +33,18 @@ const cards = [
 ];
 
 export default function DashboardPage() {
+  const [isPageLoading, setIsPageLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsPageLoading(false), 500);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  if (isPageLoading) {
+    return <PageLoader />;
+  }
+
   return (
     <div className="space-y-6 p-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">

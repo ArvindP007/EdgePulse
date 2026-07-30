@@ -23,6 +23,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { Spinner } from "@/components/ui/spinner";
+
 interface DataTableProps<TData> {
   columns: ColumnDef<TData>[];
   data: TData[];
@@ -59,7 +61,6 @@ export function DataTable<TData>({
   useEffect(() => {
     onTableInstance?.(table as unknown as TanTable<TData>);
   }, [table, onTableInstance]);
-
 
   return (
     <div className="rounded-md border">
@@ -111,7 +112,10 @@ export function DataTable<TData>({
                 colSpan={columns.length}
                 className="h-32 text-center text-muted-foreground"
               >
-                Loading customers...
+                <div className="flex items-center justify-center gap-2">
+                  <Spinner className="size-4" />
+                  <span>Loading customers...</span>
+                </div>
               </TableCell>
             </TableRow>
           ) : table.getRowModel().rows.length ? (

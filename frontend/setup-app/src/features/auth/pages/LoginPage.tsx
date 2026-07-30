@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 
 const schema = z.object({
@@ -76,9 +77,16 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded bg-blue-600 p-2 text-white disabled:opacity-60"
+          className="flex w-full items-center justify-center gap-2 rounded bg-blue-600 p-2 text-white disabled:opacity-60"
         >
-          {isSubmitting ? "Signing in..." : "Login"}
+          {isSubmitting ? (
+            <>
+              <Spinner className="size-4" />
+              <span>Signing in...</span>
+            </>
+          ) : (
+            "Login"
+          )}
         </button>
       </form>
     </div>
